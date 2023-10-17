@@ -90,9 +90,7 @@ function App() {
             <div className="error">
               <h2 className="title">Letras falladas:</h2>
               <ul className="letters">{renderErrorLetters()}</ul>
-              <button className="button" onClick={handleClick}>
-                Incrementar
-              </button>
+              
             </div>
             <form className="form" onSubmit={handleSubmit}>
               <label className="title" htmlFor="last-letter">
@@ -109,6 +107,9 @@ function App() {
                 onChange={handleLastLetter}
               />
             </form>
+            <button className="button" onClick={handleClick}>
+                Incrementar
+              </button>
           </section>
           <Dummy number={numberOfErrors} />
         </main>
