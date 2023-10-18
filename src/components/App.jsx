@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import '../styles/main.scss';
 import Header from './Header';
 import Dummy from './Dummy';
+import Form from './Form';
 
 function App() {
   // funciones, variables, handles...
@@ -23,17 +24,20 @@ function App() {
     setNumberOfErrors(numberOfErrors + 1);
   };
 
-  const handleLastLetter = (ev) => {
-    console.log(ev.target.value);
-    let re = /^[a-zA-ZñÑá-úÁ-Ú´]$/;
-    if (re.test(ev.target.value) || ev.target.value === '') {
-      //setLastLetter(lastLetter);
+  const handleLastLetter = (lastLetter) => {
+    console.log(lastLetter);
+        let re = /^[a-zA-ZñÑá-úÁ-Ú´]$/;
+        if (re.test(lastLetter) ||lastLetter === '') {
+          //setLastLetter(lastLetter);
+          setLastLetter(lastLetter);
+          console.log(lastLetter);
+          setUserLetters([...userLetters, lastLetter]);
+          console.log(userLetters);
+          
+        }
 
-      setLastLetter(ev.target.value);
-      console.log(lastLetter);
-      setUserLetters([...userLetters, ev.target.value]);
-      console.log(userLetters);
-    }
+     
+    
   };
   const renderSolutionLetters = () => {
     const wordLetters = word.split('');
@@ -71,9 +75,9 @@ function App() {
     return `dummy error-${errorCount}`;
   };
 
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
-  };
+  // const handleSubmit = (ev) => {
+  //   ev.preventDefault();
+  // };
 
   //html
   return (
@@ -92,21 +96,7 @@ function App() {
               <ul className="letters">{renderErrorLetters()}</ul>
               
             </div>
-            <form className="form" onSubmit={handleSubmit}>
-              <label className="title" htmlFor="last-letter">
-                Escribe una letra:
-              </label>
-              <input
-                autoComplete="off"
-                className="form__input"
-                maxLength="1"
-                type="text"
-                name="last-letter"
-                id="last-letter"
-                value={lastLetter}
-                onChange={handleLastLetter}
-              />
-            </form>
+            <Form handleLastLetter={handleLastLetter}/>
             <button className="button" onClick={handleClick}>
                 Incrementar
               </button>
@@ -115,7 +105,8 @@ function App() {
         </main>
       </div>
     </>
-  );
+ 
+ );
 }
 
 export default App;
