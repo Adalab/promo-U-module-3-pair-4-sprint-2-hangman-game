@@ -3,6 +3,7 @@ import '../styles/main.scss';
 import Header from './Header';
 import Dummy from './Dummy';
 import Form from './Form';
+//import SolutionLetters from './SolutionLetters';
 
 function App() {
   // funciones, variables, handles...
@@ -15,7 +16,7 @@ function App() {
     fetch('https://dev.adalab.es/api/random/word')
       .then((response) => response.json())
       .then((data) => {
-        setWord (data.word)
+        setWord(data.word);
       });
   }, []);
 
@@ -26,30 +27,29 @@ function App() {
 
   const handleLastLetter = (lastLetter) => {
     console.log(lastLetter);
-        let re = /^[a-zA-ZñÑá-úÁ-Ú´]$/;
-        if (re.test(lastLetter) ||lastLetter === '') {
-          //setLastLetter(lastLetter);
-          setLastLetter(lastLetter);
-          console.log(lastLetter);
-          setUserLetters([...userLetters, lastLetter]);
-          console.log(userLetters);
-          
-        }
-
-     
-    
+    let re = /^[a-zA-ZñÑá-úÁ-Ú´]$/;
+    if (re.test(lastLetter) || lastLetter === '') {
+      //setLastLetter(lastLetter);
+      setLastLetter(lastLetter);
+      console.log(lastLetter);
+      setUserLetters([...userLetters, lastLetter]);
+      console.log(userLetters);
+    }
   };
-  const renderSolutionLetters = () => {
+
+  
+ const renderSolutionLetters = () => {
     const wordLetters = word.split('');
     return wordLetters.map((letter, index) => {
       const newLetter = userLetters.includes(letter);
       return (
-        <li className="letter" key={index}>
+        <li className='letter' key={index}>
           {newLetter ? letter : ''}
         </li>
       );
     });
   };
+  
 
   /****4. Pintando las letras falladas*** */
   const renderErrorLetters = () => {
@@ -58,7 +58,7 @@ function App() {
 
     // Recorrer las letras erróneas y retornar un <li> para cada una
     return errorLetters.map((letter, index) => (
-      <li className="letter" key={index}>
+      <li className='letter' key={index}>
         {letter}
       </li>
     ));
@@ -82,31 +82,29 @@ function App() {
   //html
   return (
     <>
-      <div className="page">
-      <Header />   
-        <main className="main">
+      <div className='page'>
+        <Header />
+        <main className='main'>
           <section>
-            <div className="solution">
-              <h2 className="title">Solución:</h2>
-
-              <ul className="letters">{renderSolutionLetters()}</ul>
+            {/*<SolutionLetters word={word} userLetters={userLetters}/>*/}
+            <div className='solution'>
+              <h2 className='title'>Solución:</h2>
+              <ul className='letters'>{renderSolutionLetters()}</ul>
+  </div>
+            <div className='error'>
+              <h2 className='title'>Letras falladas:</h2>
+              <ul className='letters'>{renderErrorLetters()}</ul>
             </div>
-            <div className="error">
-              <h2 className="title">Letras falladas:</h2>
-              <ul className="letters">{renderErrorLetters()}</ul>
-              
-            </div>
-            <Form handleLastLetter={handleLastLetter}/>
-            <button className="button" onClick={handleClick}>
-                Incrementar
-              </button>
+            <Form handleLastLetter={handleLastLetter} />
+            <button className='button' onClick={handleClick}>
+              Incrementar
+            </button>
           </section>
           <Dummy number={numberOfErrors} />
         </main>
       </div>
     </>
- 
- );
+  );
 }
 
 export default App;
