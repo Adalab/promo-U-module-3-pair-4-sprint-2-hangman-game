@@ -3,6 +3,13 @@ import '../styles/main.scss';
 import Header from './Header';
 import Dummy from './Dummy';
 import Form from './Form';
+import Footer from './Footer';
+import Instructions from './Instructions';
+import Options from './Options';
+
+import { useLocation, matchPath } from 'react-router';
+import { Routes, Route, NavLink } from 'react-router-dom';
+
 //import SolutionLetters from './SolutionLetters';
 
 function App() {
@@ -37,8 +44,7 @@ function App() {
     }
   };
 
-  
- const renderSolutionLetters = () => {
+  const renderSolutionLetters = () => {
     const wordLetters = word.split('');
     return wordLetters.map((letter, index) => {
       const newLetter = userLetters.includes(letter);
@@ -49,7 +55,6 @@ function App() {
       );
     });
   };
-  
 
   /****4. Pintando las letras falladas*** */
   const renderErrorLetters = () => {
@@ -85,23 +90,36 @@ function App() {
       <div className='page'>
         <Header />
         <main className='main'>
-          <section>
-            {/*<SolutionLetters word={word} userLetters={userLetters}/>*/}
-            <div className='solution'>
-              <h2 className='title'>Solución:</h2>
-              <ul className='letters'>{renderSolutionLetters()}</ul>
-  </div>
-            <div className='error'>
-              <h2 className='title'>Letras falladas:</h2>
-              <ul className='letters'>{renderErrorLetters()}</ul>
-            </div>
-            <Form handleLastLetter={handleLastLetter} />
-            <button className='button' onClick={handleClick}>
-              Incrementar
-            </button>
-          </section>
-          <Dummy number={numberOfErrors} />
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <>
+                {' '}
+                <section>
+                  {/*<SolutionLetters word={word} userLetters={userLetters}/>*/}
+                  <div className='solution'>
+                    <h2 className='title'>Solución:</h2>
+                    <ul className='letters'>{renderSolutionLetters()}</ul>
+                  </div>
+                  <div className='error'>
+                    <h2 className='title'>Letras falladas:</h2>
+                    <ul className='letters'>{renderErrorLetters()}</ul>
+                  </div>
+                  <Form handleLastLetter={handleLastLetter} />
+                  <button className='button' onClick={handleClick}>
+                    Incrementar
+                  </button>
+                </section>
+                <Dummy number={numberOfErrors} />
+              </>
+            }
+          />
+          <Route path='/instructions' element={<Instructions  />} />
+          <Route path='/options' element={<Options />} />
+        </Routes>
         </main>
+        <Footer />
       </div>
     </>
   );
